@@ -26,6 +26,9 @@ steps:
     ls -la iGoat.xcarchive
     zip -r iGoat.zip iGoat.xcarchive
     mv iGoat.zip ../iGoat.zip
+    cd ../
+    pwd
+    ls -la
   displayName: 'Check SDKs and list out the project and files'  
   
 - task: Veracode@3
