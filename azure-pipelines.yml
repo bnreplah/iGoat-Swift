@@ -17,6 +17,6 @@ steps:
     xcodebuild -showsdks
     ls -la **/**
     xcodebuild -project iGoat-Swift.xcodeproj - list
-    xcodebuild archive -project iGoat-Swift.xcodeproj -sdk iphoneos16.2 -configuration Debug -scheme iGoat-Swift -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
+    xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Swift -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
     ls -la
   displayName: 'Check SDKs and list out the project and files'
