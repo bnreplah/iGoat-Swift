@@ -22,6 +22,6 @@ steps:
     ls -la
     brew tap veracode/tap
     brew install gen-ir
-    gen-ir build_log.txt iGoat.xcarchive --projectPath iGoat-Swift.xcworkspace
+    gen-ir build_log.txt iGoat.xcarchive --project-path iGoat-Swift.xcworkspace
 
   displayName: 'Check SDKs and list out the project and files'
