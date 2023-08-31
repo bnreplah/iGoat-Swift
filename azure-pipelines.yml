@@ -37,7 +37,7 @@ steps:
     AnalysisService: 'Veracode_Int'
     veracodeAppProfile: 'iGoat-Swift'
     version: '$(build.buildNumber)'
-    filepath: '$(build.artifactstagingdirectory)/iGoat.zip'
+    filepath: '/Users/runner/work/1/s/iGoat.zip'
     createProfile: true
     importResults: true
     maximumWaitTime: '360'
