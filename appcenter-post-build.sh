@@ -19,6 +19,9 @@
 # DEBUG : true -> Uses Hardcoded Test Values
 # LEGACY: true -> Uses old method of Gen-IR
 
+echo "Root Directory"
+
+
 LEGACY=true
 DEBUG=true
 
