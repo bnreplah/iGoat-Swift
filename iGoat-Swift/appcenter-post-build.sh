@@ -193,7 +193,7 @@ if [ "$DEBUG" == "true" ]; then
 
   ls $APPCENTER_SOURCE_DIRECTORY
 fi
-
+cd iGoat-Swift
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 #::SCN010
 # Creating XCODE Project Archive to be place within
