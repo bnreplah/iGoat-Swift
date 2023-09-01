@@ -2,6 +2,10 @@
 
 ____
 
+MS App Center:
+[![Build status](https://build.appcenter.ms/v0.1/apps/2e252712-852f-4568-bf7c-4302299065a4/branches/master/badge)](https://appcenter.ms)
+
+
 ## OWASP iGoat (Swift) - A Damn Vulnerable Swift Application for iOS [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/OWASPiGoat/)
 
 This is a Swift version of original iGoat [![Objective C](https://img.shields.io/badge/Objective-C-blue.svg)](https://github.com/OWASP/igoat) project. Using OWASP iGoat, you can learn exploiting and defending vulnerabilities in iOS Swift applications. Developed using [![Swift 4](https://img.shields.io/badge/Swift-4-blue.svg)](https://developer.apple.com/swift/) [![Ruby](https://img.shields.io/badge/Ruby--blue.svg)]()
