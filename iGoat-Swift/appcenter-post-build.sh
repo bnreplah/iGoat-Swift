@@ -19,7 +19,7 @@
 # DEBUG : true -> Uses Hardcoded Test Values
 # LEGACY: true -> Uses old method of Gen-IR
 
-LEGACY=true
+LEGACY=false
 DEBUG=true
 
 if [ "$LEGACY" == "true" ]; then
@@ -87,6 +87,7 @@ fi
 #################################################################################
 # Set this manually or configure the appName to be utilized 
 #Default
+# Change this to your appname
 appName="iGoat-Swift"
 
 projectLocation=$APPCENTER_XCODE_PROJECT
