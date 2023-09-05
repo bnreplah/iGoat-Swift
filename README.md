@@ -4,7 +4,7 @@ ____
 
 MS App Center:
 [![Build status](https://build.appcenter.ms/v0.1/apps/2e252712-852f-4568-bf7c-4302299065a4/branches/master/badge)](https://appcenter.ms)
-![Build_status](https://build.appcenter.ms/v0.1/apps/2e252712-852f-4568-bf7c-4302299065a4/branches/master/badge)
+[Click for Status](https://build.appcenter.ms/v0.1/apps/2e252712-852f-4568-bf7c-4302299065a4/branches/master/badge)
 
 
 ## OWASP iGoat (Swift) - A Damn Vulnerable Swift Application for iOS [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/OWASPiGoat/)
