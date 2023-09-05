@@ -22,7 +22,7 @@
 echo "Root Directory"
 
 
-LEGACY=true
+LEGACY=false
 DEBUG=true
 
 if [ "$LEGACY" == "true" ]; then
@@ -100,8 +100,8 @@ if [ "$DEBUG" == "true" ]; then
   projectLocation="./$appName/$appName.xcodeproj"
   #schemeName="iGoat-Veracode"
   
-elif [ "$LEGACY" == "true" ]; then
-  projectLocation=$APPCENTER_XCODE_PROJECT
+#elif [ "$LEGACY" == "true" ]; then
+#  projectLocation=$APPCENTER_XCODE_PROJECT
 fi
 
 #::SCN004
@@ -124,26 +124,17 @@ echo "==========================================================================
 cd $appName
 ls -la
 
-echo "========================================================================================================================================================================"
-echo "API Hooks"
-echo "========================================================================================================================================================================"
-
+#echo "========================================================================================================================================================================"
+#echo "API Hooks"
+#echo "========================================================================================================================================================================"
 
 # TODO Check to see if the build succeeded
-
-
+# You can utilize the APIs to grab the build log and use the artifact created from the build if it succeeded 
 # Find archive file
-echo $APPCENTER_OUTPUT_DIRECTORY	
+echo "App Center Output Directory" $APPCENTER_OUTPUT_DIRECTORY	
 ls -la $APPCENTER_OUTPUT_DIRECTORY/*	
 
 # use the api to get the build log
-
-
-
-
-
-
-
 
 
 #::SCN005
@@ -216,18 +207,18 @@ if [ "$DEBUG" == "true" ]; then
       cat build_log.txt
 elif [ "$DEBUG" == "false" ]; then
   # Legacy Mode
-  if [ "$LEGACY" == "true" ]; then
-      
-        xcodebuild archive -workspace $appName.xcworkspace -configuration Debug -scheme $APPCENTER_XCODE_SCHEME -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath $appName.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
-        echo "========================================================================================================================================================================"
-        echo "Output from Build_log.txt #############################################################################################################################################"
-        echo "========================================================================================================================================================================"
-        cat build_log.txt
-  else
+#  if [ "$LEGACY" == "true" ]; then
+#      
+#        xcodebuild archive -workspace $appName.xcworkspace -configuration Debug -scheme $APPCENTER_XCODE_SCHEME -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath $appName.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
+#        echo "========================================================================================================================================================================"
+#        echo "Output from Build_log.txt #############################################################################################################################################"
+#        echo "========================================================================================================================================================================"
+#        cat build_log.txt
+#  else
     # Default
     
     xcodebuild archive -project $appName.xcodeproj -scheme $APPCENTER_XCODE_SCHEME -configuration Debug -destination generic/platform=iOS -archivePath $appName.xcarchive DEBUG_INFORMATION_FORMAT=dwarf-with-dsym CODE_SIGN_IDENTITY=$CODE_SIGN_IDENTITY_V CODE_SIGNING_REQUIRED=$CODE_SIGNING_REQUIRED_V CODE_SIGNING_ALLOWED=$CODE_SIGNING_ALLOWED_V ENABLE_BITCODE=NO | tee build_log.txt
-  fi
+#  fi
 else
   # debug is neither true or false
   echo "[Error] There was an issue with the script"
@@ -270,29 +261,29 @@ echo "==========================================================================
 # https://github.com/veracode/gen-ir/
 
 #::SCN013
-if [ "$LEGACY" == "true" ]; then
-  echo "[LEGACY]::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-  echo "========================================================================================================================================================================" 
-  echo "Running modified version to write bitcode out to IR folder #############################################################################################################"
-  echo "========================================================================================================================================================================"
-  
-  # uses old method
-  #ls -la $appName.xcarchive
-  #mkdir $appName.xcarchive/IR
-  #gen-ir build_log.txt Signal.xcarchive/ 
-  gen-ir build_log.txt $appName.xcarchive/
-
-  echo "========================================================================================================================================================================" 
-  echo "Contents of archive  2####################################################################################################################################################"
-  echo "========================================================================================================================================================================"
-
-  ls -la $appName.xcarchive/IR
-else
+#if [ "$LEGACY" == "true" ]; then
+#  echo "[LEGACY]::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+#  echo "========================================================================================================================================================================" 
+#  echo "Running modified version to write bitcode out to IR folder #############################################################################################################"
+#  echo "========================================================================================================================================================================"
+#  
+#  # uses old method
+#  #ls -la $appName.xcarchive
+#  #mkdir $appName.xcarchive/IR
+#  #gen-ir build_log.txt Signal.xcarchive/ 
+#  gen-ir build_log.txt $appName.xcarchive/
+#
+#  echo "========================================================================================================================================================================" 
+#  echo "Contents of archive  2####################################################################################################################################################"
+#  echo "========================================================================================================================================================================"
+#
+#  ls -la $appName.xcarchive/IR
+#else
   # uses new method
   # https://docs.veracode.com/r/Generate_IR_to_Package_iOS_and_tvOS_Apps
   #echo "Default"
   gen-ir build_log.txt $appName.xcarchive --project-path $projectLocation
-fi
+#fi
 
 
 if [ "$DEBUG" == "true" ]; then
@@ -300,7 +291,8 @@ if [ "$DEBUG" == "true" ]; then
   echo "Contents of archive 2####################################################################################################################################################"
   echo "========================================================================================================================================================================"
 
-  ls -la $appName.xcarchive
+  ls -la $appName.xcarchive/*
+  
 fi
 
 #::SCN013
