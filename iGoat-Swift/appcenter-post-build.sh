@@ -90,7 +90,8 @@ fi
 # Change this to your appname
 appName="iGoat-Swift"
 
-projectLocation=$APPCENTER_XCODE_PROJECT
+projectWorkspaceLocation=$APPCENTER_XCODE_PROJECT
+projectLocation=$appName.xcodeproj
 #projectLocation="$appName/$appName.xcodeproj"
 schemeName=$APPCENTER_XCODE_SCHEME	
 
