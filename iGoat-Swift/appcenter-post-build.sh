@@ -269,7 +269,7 @@ ls -la
 
 mkdir Veracode/
 ls -la
-cp $appName-Podfile.zip $appName.zip -t Veracode/
+cp $appName-Podfile.zip $appName.zip Veracode/
 ls -la Veracode/
 
 #::SCN015
