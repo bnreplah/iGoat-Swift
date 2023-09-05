@@ -35,7 +35,7 @@ steps:
     AnalysisService: 'Veracode_Int'
     veracodeAppProfile: 'iGoat-Swift'
     version: '$(build.buildNumber)'
-    filepath: '/Users/runner/work/1/s/iGoat-Swift.zip'
+    filepath: '/Users/runner/work/1/s/iGoat-Swift/iGoat-Swift.zip'
     sandboxName: 'ADO'
     createSandBox: true
     createProfile: true
