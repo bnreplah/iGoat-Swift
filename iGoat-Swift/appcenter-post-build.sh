@@ -17,17 +17,11 @@
 # Script Configuration Switches
 ##################################################################################
 # DEBUG : true -> Uses Hardcoded Test Values
-# LEGACY: true -> Uses old method of Gen-IR
 
-LEGACY=false
+
+
 DEBUG=true
 
-if [ "$LEGACY" == "true" ]; then
-  echo "----------------------------------------------------------------------------"
-  echo " Legacy is turned on : $LEGACY"
-  echo "----------------------------------------------------------------------------"
-
-fi
 
 if [ "$DEBUG" == "true" ]; then
 
@@ -44,6 +38,7 @@ fi
 # This is needed for archiving the application. If you already have an archive file produced then this step is not needed and can be commented out.
 # IF the code signing identity is already loaded from MS APP center you may be able to pass an enviornmental variable to call it
 # https://learn.microsoft.com/en-us/appcenter/build/custom/variables/#pre-defined-variables
+
 CODE_SIGN_IDENTITY_V="" 
 CODE_SIGNING_REQUIRED_V=NO 
 CODE_SIGNING_ALLOWED_V=NO
@@ -51,10 +46,11 @@ AD_HOC_CODE_SIGNING_ALLOWED=YES
 PROVISIONING_PROFILE=""
 DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
 ENABLE_BITCODE=NO
+
 echo "======================================================================================"
 echo "===        Microsoft App Center Post Build Script with Veracode Integration        ==="
 #echo "=====        Veracode Unofficial Integration with Microsoft App Center        ========"
-echo "============                    Version 1.0.3                     ===================="
+echo "============                    Version 1.0.4                     ===================="
 echo "======================================================================================"
 
 #::SCN002
@@ -91,8 +87,7 @@ fi
 appName="iGoat-Swift"
 
 projectWorkspaceLocation=$APPCENTER_XCODE_PROJECT
-projectLocation=$appName.xcodeproj
-#projectLocation="$appName/$appName.xcodeproj"
+projectLocation="$appName.xcodeproj"
 schemeName=$APPCENTER_XCODE_SCHEME	
 
 
@@ -109,31 +104,15 @@ CREATESANDBOX=true
 CREATEPROFILE=true
 OPTARGS=''
 
-echo "========================================================================================================================================================================"
-echo "Moving to build location"
-echo "========================================================================================================================================================================"
+# echo "========================================================================================================================================================================"
+# echo "Moving to build location"
+# echo "========================================================================================================================================================================"
 
+echo "Current Working Directory"
 #cd iGoat-Swift 
 pwd
 #cd $appName
 ls -la
-
-echo "========================================================================================================================================================================"
-echo "API Hooks"
-echo "========================================================================================================================================================================"
-
-
-# TODO Check to see if the build succeeded
-
-echo "Output directory"
-
-# Find archive file
-echo $APPCENTER_OUTPUT_DIRECTORY	
-ls -la $APPCENTER_OUTPUT_DIRECTORY/*	
-
-# use the api to get the build log
-
-
 
 #::SCN005
 echo "========================================================================================================================================================================"
@@ -199,24 +178,13 @@ if [ "$DEBUG" == "true" ]; then
       echo "[DEBUG]:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
       
       xcodebuild archive -workspace $appName.xcworkspace -configuration Debug -scheme $schemeName -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath $appName.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO AD_HOC_CODE_SIGNING_ALLOWED=YES | tee build_log.txt
-      echo "========================================================================================================================================================================"
-      echo "Output from Build_log.txt #############################################################################################################################################"
-      echo "========================================================================================================================================================================"
+      echo "[DEBUG]:========================================================================================================================================================================"
+      echo "[DEBUG]:Output from Build_log.txt #############################################################################################################################################"
+      echo "[DEBUG]:========================================================================================================================================================================"
       cat build_log.txt
+
 elif [ "$DEBUG" == "false" ]; then
-  # Legacy Mode
-  if [ "$LEGACY" == "true" ]; then
-      
-        xcodebuild archive -workspace $appName.xcworkspace -configuration Debug -scheme $APPCENTER_XCODE_SCHEME -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath $appName.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
-        echo "========================================================================================================================================================================"
-        echo "Output from Build_log.txt #############################################################################################################################################"
-        echo "========================================================================================================================================================================"
-        cat build_log.txt
-  else
-    # Default
-    
     xcodebuild archive -project $appName.xcodeproj -scheme $APPCENTER_XCODE_SCHEME -configuration Debug -destination generic/platform=iOS -archivePath $appName.xcarchive DEBUG_INFORMATION_FORMAT=dwarf-with-dsym CODE_SIGN_IDENTITY=$CODE_SIGN_IDENTITY_V CODE_SIGNING_REQUIRED=$CODE_SIGNING_REQUIRED_V CODE_SIGNING_ALLOWED=$CODE_SIGNING_ALLOWED_V ENABLE_BITCODE=NO | tee build_log.txt
-  fi
 else
   # debug is neither true or false
   echo "[Error] There was an issue with the script"
@@ -245,9 +213,9 @@ fi
 #updated version
 #::SCN012
 if [ "$DEBUG" == "true" ]; then
-  echo "========================================================================================================================================================================" 
-  echo "Contents of archive 1####################################################################################################################################################"
-  echo "========================================================================================================================================================================"
+  echo "[DEBUG]:========================================================================================================================================================================" 
+  echo "[DEBUG]:Contents of archive before####################################################################################################################################################"
+  echo "[DEBUG]:========================================================================================================================================================================"
 
   ls -la $appName.xcarchive
 fi
@@ -259,37 +227,26 @@ echo "==========================================================================
 # https://github.com/veracode/gen-ir/
 
 #::SCN013
-if [ "$LEGACY" == "true" ]; then
-  echo "[LEGACY]::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-  echo "========================================================================================================================================================================" 
-  echo "Running modified version to write bitcode out to IR folder #############################################################################################################"
-  echo "========================================================================================================================================================================"
-  
-  # uses old method
-  #ls -la $appName.xcarchive
-  #mkdir $appName.xcarchive/IR
-  #gen-ir build_log.txt Signal.xcarchive/ 
-  gen-ir build_log.txt $appName.xcarchive/
 
-  echo "========================================================================================================================================================================" 
-  echo "Contents of archive  2####################################################################################################################################################"
-  echo "========================================================================================================================================================================"
-
-  ls -la $appName.xcarchive/IR
-else
-  # uses new method
-  # https://docs.veracode.com/r/Generate_IR_to_Package_iOS_and_tvOS_Apps
-  #echo "Default"
-  gen-ir build_log.txt $appName.xcarchive --project-path $projectLocation
+if [ "$DEBUG" == "true" ]; then
+  echo "[DEBUG]: Reading out the build log:"
+  cat build_log.txt
 fi
+
+# uses new method
+# https://docs.veracode.com/r/Generate_IR_to_Package_iOS_and_tvOS_Apps
+#echo "Default"
+gen-ir build_log.txt $appName.xcarchive --project-path $projectLocation
+
 
 
 if [ "$DEBUG" == "true" ]; then
-  echo "========================================================================================================================================================================" 
-  echo "Contents of archive 2####################################################################################################################################################"
-  echo "========================================================================================================================================================================"
+  echo "[DEBUG]:========================================================================================================================================================================" 
+  echo "[DEBUG]:Contents of archive after####################################################################################################################################################"
+  echo "[DEBUG]:========================================================================================================================================================================"
 
-  ls -la $appName.xcarchive
+  echo "[DEBUG]:An IR folder should be present inside the archive, if not then there will be an issue with the scan and it won't be accepted for analysis"
+  ls -la $appName.xcarchive/IR
 fi
 
 #::SCN013
@@ -320,13 +277,13 @@ echo "==========================================================================
 echo "#####  Veracode Upload and Scan  #######################################################################################################################################"
 echo "========================================================================================================================================================================"
 if [ "$DEBUG" == "true" ]; then
-  echo "         0000000000000000000000000          1111111    -----------------------------------------------------------"
-  echo "         000000              00000        11 111111    ------- Veracode Upload and Scan --------------------------"
-  echo "         111111              11111             1111    -----------------------------------------------------------"
-  echo "         010101              10101             1111    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "         110010              11011             1111    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "         111111              11111             1111    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "         1111111111111111111111111          111111111  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "[DEBUG]:         0000000000000000000000000          1111111    -----------------------------------------------------------"
+  echo "[DEBUG]:         000000              00000        11 111111    ------- Veracode Upload and Scan --------------------------"
+  echo "[DEBUG]:         111111              11111             1111    -----------------------------------------------------------"
+  echo "[DEBUG]:         010101              10101             1111    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "[DEBUG]:         110010              11011             1111    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "[DEBUG]:         111111              11111             1111    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+  echo "[DEBUG]:         1111111111111111111111111          111111111  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
 
 
@@ -334,7 +291,7 @@ fi
 if [ -n $SANDBOXNAME ]; then
   if [ "$DEBUG" == "true" ]; then
     echo "[DEBUG]:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
-    java -jar VeracodeJavaAPI.jar -action UploadAndScan -vid $VID -vkey $VKEY  -deleteincompletescan 2 -createprofile false -createsandbox true -appname "$APPLICATIONNAME" -sandboxname "$SANDBOXNAME" -version "$APPCENTER_BUILD_ID-APPCENTER" -filepath Veracode/
+    java -jar VeracodeJavaAPI.jar -action UploadAndScan -vid $VID -vkey $VKEY  -deleteincompletescan 2 -createprofile false -createsandbox true -appname "$APPLICATIONNAME" -sandboxname "$SANDBOXNAME" -version "$APPCENTER_BUILD_ID-APPCENTER" -filepath Veracode/ $OPTARGS
   else
     # Default Sandbox
     java -jar VeracodeJavaAPI.jar -action UploadAndScan -vid $VID -vkey $VKEY  -deleteincompletescan $DELETEINCOMPLETE -createprofile $CREATEPROFILE -createsandbox $CREATESANDBOX -appname "$APPLICATIONNAME" -sandboxname "$SANDBOXNAME" -version "$APPCENTER_BUILD_ID-APPCENTER" -filepath Veracode/ $OPTARGS
