@@ -18,12 +18,12 @@ steps:
     ls -la **/**
     xcodebuild -project iGoat-Swift.xcodeproj -list
     pod install
-    xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Swift -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat-Swift.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
+    xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Veracode -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat-Swift.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO AD_HOC_CODE_SIGNING_ALLOWED=YES | tee build_log.txt
     ls -la
     brew tap veracode/tap
     brew install gen-ir
     gen-ir build_log.txt iGoat-Swift.xcarchive --project-path iGoat-Swift.xcodeproj
-    ls -la iGoat-Swift.xcarchive
+    ls -la iGoat-Swift.xcarchive/*
     zip -r iGoat-Swift.zip iGoat-Swift.xcarchive
     pwd
     ls -la
