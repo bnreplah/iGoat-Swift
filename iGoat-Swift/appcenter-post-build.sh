@@ -94,13 +94,6 @@ projectLocation=$APPCENTER_XCODE_PROJECT
 #projectLocation="$appName/$appName.xcodeproj"
 schemeName=$APPCENTER_XCODE_SCHEME	
 
-if [ "$DEBUG" == "true" ]; then
-  projectLocation="./$appName/$appName.xcodeproj"
-  #schemeName="iGoat-Veracode"
-  
-elif [ "$LEGACY" == "true" ]; then
-  projectLocation=$APPCENTER_XCODE_PROJECT
-fi
 
 #::SCN004
 # https://docs.veracode.com/r/r_uploadandscan
