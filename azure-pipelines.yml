@@ -41,6 +41,7 @@ steps:
     filepath: '/Users/runner/work/1/s/iGoat-Swift/iGoat-Swift.zip'
     sandboxName: 'ADO'
     createSandBox: true
+    optargs: '-deleteincompletescan 2'
     createProfile: true
     importResults: true
     maximumWaitTime: '360'
