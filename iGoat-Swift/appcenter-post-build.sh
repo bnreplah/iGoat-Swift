@@ -43,7 +43,6 @@ CODE_SIGN_IDENTITY_V=""
 CODE_SIGNING_REQUIRED_V=NO 
 CODE_SIGNING_ALLOWED_V=NO
 AD_HOC_CODE_SIGNING_ALLOWED=YES
-PROVISIONING_PROFILE=""
 DEBUG_INFORMATION_FORMAT=dwarf-with-dsym
 ENABLE_BITCODE=NO
 
@@ -190,15 +189,19 @@ else
   echo "[Error] There was an issue with the script"
 
 fi
-
-if [ -f $appname.xcarchive ]; then
+echo "========================================================================================================================================================================"
+echo "Checking if the archive succeeded"
+echo "========================================================================================================================================================================"
+if ! test -f $appname.xcarchive ; then
 
   echo "Archive file doesn't exist. Trying again"
   xcodebuild clean
-  xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Veracode -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat-Swift.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
+  xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Veracode -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat-Swift.xcarchive CODE_SIGN_IDENTITY=" " CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
 
-  if [ -f $appname.xcarchive ]; then
-
+  if ! test -f $appname.xcarchive ; then
+    echo "========================================================================================================================================================================"
+    echo "Checking if the archive succeeded again"
+    echo "========================================================================================================================================================================"
     echo "Still not found"
     exit 0
     
