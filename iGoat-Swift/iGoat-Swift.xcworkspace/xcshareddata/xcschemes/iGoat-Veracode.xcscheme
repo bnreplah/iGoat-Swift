@@ -17,15 +17,15 @@
                BlueprintIdentifier = "D221A088169C9E5E00537ABF"
                BuildableName = "iGoat-Swift.app"
                BlueprintName = "iGoat-Swift"
-               ReferencedContainer = "container:iGoat-Swift.xcodeproj">
+               ReferencedContainer = "container:iGoat-Swift.xcworkspace">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
+            buildForRunning = "YES"
             buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
@@ -40,7 +40,7 @@
             BlueprintIdentifier = "D221A088169C9E5E00537ABF"
             BuildableName = "iGoat-Swift.app"
             BlueprintName = "iGoat-Swift"
-            ReferencedContainer = "container:iGoat-Swift.xcodeproj">
+            ReferencedContainer = "container:iGoat-Swift.xcworkspace">
          </BuildableReference>
       </MacroExpansion>
       <EnvironmentVariables>
@@ -73,7 +73,7 @@
             BlueprintIdentifier = "D221A088169C9E5E00537ABF"
             BuildableName = "iGoat-Swift.app"
             BlueprintName = "iGoat-Swift"
-            ReferencedContainer = "container:iGoat-Swift.xcodeproj">
+            ReferencedContainer = "container:iGoat-Swift.xcworkspace">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -118,7 +118,7 @@
             BlueprintIdentifier = "D221A088169C9E5E00537ABF"
             BuildableName = "iGoat-Swift.app"
             BlueprintName = "iGoat-Swift"
-            ReferencedContainer = "container:iGoat-Swift.xcodeproj">
+            ReferencedContainer = "container:iGoat-Swift.xcworkspace">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
