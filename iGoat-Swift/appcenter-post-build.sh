@@ -191,6 +191,21 @@ else
 
 fi
 
+if [ -f $appname.xcarchive ]; then
+
+  echo "Archive file doesn't exist. Trying again"
+  xcodebuild clean
+  xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Veracode -destination generic/platform=iOS DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat-Swift.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
+
+  if [ -f $appname.xcarchive ]; then
+
+    echo "Still not found"
+    exit 0
+    
+  fi
+
+fi
+
 #::SCN011
 ################################################################################################################################################################################
 ######################################################### Veracode SCA AGENT BASED SCAN ######################################################################################## 
