@@ -23,4 +23,7 @@ jobs:
         run: |
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild archive -scheme iGoat-Swift -"$filetype_parameter" "$file_to_build" -archivePath iGoat-Swift.xcarchive -configuration Debug DEBUG_INFORMATION_FORMAT=dwarf-with-dsym CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | gen-ir iGoat-Swift.xcarchive --project-path iGoat-Swift.xcodeproj
+          xcodebuild archive -scheme iGoat-Swift -"$filetype_parameter" "$file_to_build" -archivePath iGoat-Swift.xcarchive -configuration Debug DEBUG_INFORMATION_FORMAT=dwarf-with-dsym CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO >> build_log.txt
+          gen-ir build_log.txt iGoat-Swift.xcarchive --project-path iGoat-Swift.xcodeproj
+          ls -la iGoat-Swift.xcarchive/*
+          zip -r iGoat-Swift.zip iGoat-Swift.xcarchive
