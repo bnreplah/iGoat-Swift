@@ -21,6 +21,7 @@ jobs:
           brew install gen-ir
       - name: Build
         run: |
+          cd iGoat-Swift
           xcodebuild archive -scheme iGoat-Swift -workspace iGoat-Swift.xcworkspace -archivePath iGoat-Swift.xcarchive -configuration Debug DEBUG_INFORMATION_FORMAT=dwarf-with-dsym CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO >> build_log.txt
           gen-ir build_log.txt iGoat-Swift.xcarchive --project-path iGoat-Swift.xcodeproj
           ls -la iGoat-Swift.xcarchive/*
