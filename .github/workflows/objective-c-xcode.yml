@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: |
           cd iGoat-Swift
-          xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Swift -sdk iphoneos16.2 -destination "generic/platform=iOS Simulator, name:iPhone 11 " DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat-Swift.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
+          xcodebuild archive -workspace iGoat-Swift.xcworkspace -configuration Debug -scheme iGoat-Swift -sdk iphoneos16.2 -destination "generic/platform=iOS Simulator" DEBUG_INFORMATION_FORMAT=dwarf-with-dsym -archivePath iGoat-Swift.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO | tee build_log.txt
           gen-ir build_log.txt iGoat-Swift.xcarchive --project-path iGoat-Swift.xcodeproj
         #  xcodebuild archive -scheme iGoat-Swift -project iGoat-Swift.xcodeproj -archivePath iGoat-Swift.xcarchive -configuration Debug DEBUG_INFORMATION_FORMAT=dwarf-with-dsym CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO ENABLE_BITCODE=NO >> build_log.txt
           
