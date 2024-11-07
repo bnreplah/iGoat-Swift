@@ -1,0 +1,28 @@
+name: Conditional Step Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Specify the runner image'
+        required: true
+        default: 'ubuntu-latest'
+        type: choice
+        options:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+
+jobs:
+  example_job:
+    runs-on: ${{ inputs.image }} # This will select the runner based on the input
+    steps:
+      - name: Print Runner Info
+        run: echo "Running on ${{ runner.os }}!"
+
+      - name: MacOS Specific Step
+        if: ${{ inputs.image == 'macos-latest' }}
+        run: echo "This step only runs on macOS!"
+        
+      - name: Always Run Step
+        run: echo "This step runs regardless of the input image."
