@@ -31,3 +31,6 @@ jobs:
       - name: not windows
         if: ${{ ! inputs.image == 'windows-latest' }}
         run: echo "This step runs when not windows os."
+
+      - name: always runs
+        run: echo "This step runs always."
