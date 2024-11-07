@@ -24,5 +24,6 @@ jobs:
         if: ${{ inputs.image == 'macos-latest' }}
         run: echo "This step only runs on macOS!"
         
-      - name: Always Run Step
-        run: echo "This step runs regardless of the input image."
+      - name: Not Mac Os
+        if: ${{ ! inputs.image == 'macos-latest' }}
+        run: echo "This step runs when not mac os."
